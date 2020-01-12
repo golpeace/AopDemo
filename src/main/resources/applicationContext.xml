@@ -1,0 +1,37 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+
+	<!--mvc注解支持，响应中文乱码处理  用的是fastJson-->
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<!-- 处理响应中文内容乱码 -->
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name="defaultCharset" value="UTF-8" />
+				<property name="supportedMediaTypes">
+					<list>
+						<value>text/html</value>
+						<value>application/json</value>
+					</list>
+				</property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+
+
+	<context:component-scan base-package="com.aop.demo" />
+
+	<!--表示开启AOP代理自动配置，默认：proxy-target-class="false"表示使用jdk动态代理
+		如果是true，表示为cglib动态代理
+	-->
+	<aop:aspectj-autoproxy/>
+
+</beans>
